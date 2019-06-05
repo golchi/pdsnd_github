@@ -6,6 +6,70 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
+def choose_city() :
+    """
+    Asks user to specify a city
+    """
+    while True:    
+        print ('MENU - Choose a city')
+        print ('- C: for Chicago')
+        print ('- N: for New York')
+        print ('- W: for Washington')
+        name = input("Enter your choice: ")
+        name = name.upper()
+        if name == 'C':
+            city = 'chicago'
+        elif name == 'N':
+            city = 'new york city'
+        elif name == 'W':
+            city = 'washington'        
+        if name  in ['C','N','W']:
+            break           
+    return city
+
+
+def choose_month() :
+    while True:    
+        print ('Enter "all" to skip month filtering or enter a digit 1-January .. to .. 12- December')
+        m_input = input("Enter your choice: ")
+        m_input = m_input.lower()
+        month = ''
+        if m_input == 'all':
+            month = 'all'
+        else:
+            try: 
+                m_input = int(m_input)
+            except:
+                print ('Invalid value, try again')      
+                m_input = 0      
+            if(1 <= m_input <= 12):
+                month = m_input     
+        if month != '':
+            break           
+    return month
+
+
+def choose_day() :
+    while True:    
+        print ('Enter "all" to skip day filtering or enter a digit 1 to 31')
+        d_input = input("Enter your choice: ")
+        d_input = d_input.lower()
+        day = ''
+        if d_input == 'all':
+            day = 'all'
+        else:
+            try: 
+                d_input = int(d_input)
+            except:
+                print ('Invalid value, try again')      
+                d_input = 0      
+            if(1 <= d_input <= 31):
+                day = d_input     
+        if day != '':
+            break           
+    return day
+
+
 def get_filters():
     """                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     Asks user to specify a city, month, and day to analyze.
@@ -17,13 +81,13 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-
+    city = choose_city()
 
     # get user input for month (all, january, february, ... , june)
-
+    month = choose_month()
 
     # get user input for day of week (all, monday, tuesday, ... sunday)
-
+    day = choose_day()
 
     print('-'*40)
     return city, month, day
@@ -40,14 +104,10 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-
-
     filename = 'data/'+ city + '.csv'
 
     # load data file into a dataframe
     df = pd.read_csv(filename)
-    print (df)
-
     return df
 
 
@@ -127,6 +187,7 @@ def user_stats(df):
 def main():
     while True:
         city, month, day = get_filters()
+
         df = load_data(city, month, day)
 
         time_stats(df)
