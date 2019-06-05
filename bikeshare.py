@@ -29,6 +29,9 @@ def choose_city() :
 
 
 def choose_month() :
+    """
+    Asks user to specify a month
+    """
     while True:    
         print ('Enter "all" to skip month filtering or enter a digit 1-January .. to .. 12- December')
         m_input = input("Enter your choice: ")
@@ -50,6 +53,9 @@ def choose_month() :
 
 
 def choose_day() :
+    """
+    Asks user to specify a day
+    """
     while True:    
         print ('Enter "all" to skip day filtering or enter a digit 1 to 31')
         d_input = input("Enter your choice: ")
@@ -64,7 +70,7 @@ def choose_day() :
                 print ('Invalid value, try again')      
                 d_input = 0      
             if(1 <= d_input <= 31):
-                day = d_input     
+                day = str(d_input)     
         if day != '':
             break           
     return day
