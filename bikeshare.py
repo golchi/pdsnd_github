@@ -56,21 +56,16 @@ def choose_day() :
     """
     Asks user to specify a day
     """
+    days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
     while True:    
-        print ('Enter "all" to skip day filtering or enter a digit 1 to 31')
+        print ('Enter "all" to skip day filtering or enter the day (monday..sunday)')
         d_input = input("Enter your choice: ")
         d_input = d_input.lower()
         day = ''
         if d_input == 'all':
             day = 'all'
-        else:
-            try: 
-                d_input = int(d_input)
-            except:
-                print ('Invalid value, try again')      
-                d_input = 0      
-            if(1 <= d_input <= 31):
-                day = str(d_input)     
+        elif d_input in days:
+            day = d_input     
         if day != '':
             break           
     return day
@@ -114,6 +109,11 @@ def load_data(city, month, day):
 
     # load data file into a dataframe
     df = pd.read_csv(filename)
+    # convert the Start Time column to datetime
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
+    # extract month and day of week from Start Time to create new columns
+    df['month'] = df['Start Time'].dt.month
+    df['day_of_week'] = df['Start Time'].dt.weekday_name
 
     # filter by month if applicable to create the new dataframe
     if month != 'all':
@@ -122,7 +122,7 @@ def load_data(city, month, day):
     # filter by day of week if applicable to create the new dataframe
     if day != 'all':
         df = df[df['day_of_week'] == day.title()]
-
+    print (day, type(day),df)
     return df
 
 
@@ -214,16 +214,17 @@ def main():
 
         df = load_data(city, month, day)
 
+        """
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-
+        """
         restart = input('\nWould you like to restart ? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
 
 
 if __name__ == "__main__":
-	#main()
-    load_data('chicago', '2', '2')
+	main()
+    
