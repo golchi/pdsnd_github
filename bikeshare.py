@@ -183,10 +183,12 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     # display total travel time
-
+    total_travel_time = df['Trip Duration'].sum()
+    print('Total travel time : ', total_travel_time)
 
     # display mean travel time
-
+    mean_travel_time = df['Trip Duration'].mean()
+    print('Mean travel time : ', mean_travel_time)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -217,9 +219,9 @@ def main():
         df = load_data(city, month, day)
         time_stats(df)
         station_stats(df)
+        trip_duration_stats(df)
 
         """
-        trip_duration_stats(df)
         user_stats(df)
         """
         restart = input('\nWould you like to restart ? Enter yes or no.\n')
