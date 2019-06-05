@@ -124,7 +124,6 @@ def load_data(city, month, day):
     if day != 'all':
         df = df[df['day_of_week'] == day.title()]
 
-    print(df)
     return df
 
 
@@ -201,12 +200,25 @@ def user_stats(df):
     start_time = time.time()
 
     # Display counts of user types
-
+    user_types_count = df['User Type'].value_counts()
+    print('User types stats')
+    for u_type, u_type_count in user_types_count.items():
+        print(u_type,' -', u_type_count)
 
     # Display counts of gender
+    if 'Gender' in df.columns:
+        gender_count = df['Gender'].value_counts()
+        print('Gender : ', gender_count)
 
 
     # Display earliest, most recent, and most common year of birth
+    if 'Birth Year' in df.columns:
+        earliest_year = int(df['Birth Year'].min())
+        most_recent_year = int(df['Birth Year'].max())
+        most_common_year = int(df['Birth Year'].mode())
+        print('Earliest year of birth: ', earliest_year)
+        print('Most recent year of birth:', most_recent_year)
+        print('Most common year of birth:', most_common_year)
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -220,10 +232,8 @@ def main():
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
-
-        """
         user_stats(df)
-        """
+
         restart = input('\nWould you like to restart ? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
