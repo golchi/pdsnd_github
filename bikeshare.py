@@ -128,7 +128,7 @@ def load_data(city, month, day):
     return df
 
 
-def time_stats(df):
+def time_stats(df): 
     """Displays statistics on the most frequent times of travel."""
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
@@ -157,13 +157,19 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
-    # display most commonly used start station
+    popular_start_station = df['Start Station'].mode()[0]
+    popular_end_station = df['End Station'].mode()[0]
+    
+    popular_combination = df.groupby(['Start Station','End Station']).size().idxmax()
 
+    # display most commonly used start station
+    print ('Most commonly used start station: ',popular_start_station)
 
     # display most commonly used end station
-
+    print ('Most commonly used end station: ',popular_end_station)
 
     # display most frequent combination of start station and end station trip
+    print ('Most frequent combination of start station and end station trip: ',popular_combination)
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -210,9 +216,9 @@ def main():
         city, month, day = get_filters()
         df = load_data(city, month, day)
         time_stats(df)
+        station_stats(df)
 
         """
-        station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
         """
