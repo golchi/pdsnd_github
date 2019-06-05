@@ -7,7 +7,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'washington': 'washington.csv' }
 
 def get_filters():
-    """
+    """                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     Asks user to specify a city, month, and day to analyze.
 
     Returns:
@@ -41,6 +41,12 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
 
+
+    filename = 'data/'+ city + '.csv'
+
+    # load data file into a dataframe
+    df = pd.read_csv(filename)
+    print (df)
 
     return df
 
@@ -134,4 +140,5 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+	#main()
+    load_data('chicago', '2', '2')
